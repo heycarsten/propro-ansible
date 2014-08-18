@@ -1,4 +1,4 @@
-# Propro-Ansible
-## Same provisioning goodness, less trolltential
+Propro Ansible Playbooks
+========================
 
-MMMMMMmkay, TODO: write.
+Propro is dead, long live Propro!

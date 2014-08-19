@@ -1,0 +1,44 @@
+---
+- name: Install RVM package dependencies
+  apt: name={{item}} state=latest
+  with_items:
+  - curl
+  - gawk
+  - g++
+  - gcc
+  - make
+  - libc6-dev
+  - libreadline6-dev
+  - zlib1g-dev
+  - libssl-dev
+  - libyaml-dev
+  - libsqlite3-dev
+  - sqlite3
+  - autoconf
+  - libgdbm-dev
+  - libncurses5-dev
+  - automake
+  - libtool
+  - bison
+  - pkg-config
+  - libffi-dev
+
+- name: Install RVM for user {{rvm_install_user}}
+  user: {{rvm_install_user}}
+  shell: curl -L https://get.rvm.io | bash -s {{rvm_channel}}
+
+- name: Set autolibs to read-fail
+  user: {{rvm_install_user}}
+  shell: rvm autolibs read-fail
+
+- name: Install Ruby {{rvm_ruby_version}} for user {{rvm_install_user}}
+  user: {{rvm_install_user}}
+  shell: rvm install {{rvm_ruby_version}}
+
+- name: Set Ruby {{rvm_ruby_version}} as default for user {{rvm_install_user}}
+  user: {{rvm_install_user}}
+  shell: rvm --default use {{rvm_ruby_version}}
+
+- name: Install Bundler gem
+  user: {{rvm_install_user}}
+  shell: gem install bundler

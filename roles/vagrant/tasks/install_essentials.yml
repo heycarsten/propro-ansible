@@ -1,8 +1,0 @@
----
-- name: Install essential packages
-  apt: name={{item}} state=latest
-  with_items:
-    - vim-nox
-    - htop
-    - git-core
-  tags: install_essentails

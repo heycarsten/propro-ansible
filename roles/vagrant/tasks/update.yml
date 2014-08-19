@@ -1,8 +1,0 @@
----
-- name: Update apt package sources
-  apt: update_cache=yes cache_valid_time={{apt_cache_ttl}}
-  tags: update_package_sources
-
-- name: Upgrade installed packages
-  apt: upgrade=safe
-  tags: update_installed_packages

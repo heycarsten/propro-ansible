@@ -1,5 +1,0 @@
-- include: set_locale.yml
-- include: update.yml
-- include: set_timezone.yml
-- include: ntp.yml
-- include: install_essentials.yml

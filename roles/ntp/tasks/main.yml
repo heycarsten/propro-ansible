@@ -1,8 +1,8 @@
 ---
 - name: Install NTP
-  apt: pkg=ntp state=latest
-  tags: install_ntp
+  apt: name=ntp state=latest
+  tags: ntp_install
 
-- name: Configure NTP
+- name: Enable NTP
   service: name=ntp state=started enabled=yes
   tags: configure_ntp

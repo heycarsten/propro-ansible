@@ -1,0 +1,8 @@
+---
+- name: Generate locale {{locale}}
+  locale_gen: name={{locale}} state=present
+  tags: locale_generate
+
+- name: Set locale to {{locale}}
+  shell: update-locale LANG={{locale}} LC_MESSAGES={{locale}} LC_ALL={{locale}}
+  tags: locale_set

@@ -1,7 +1,8 @@
-Propro
-======
+Propro: Provision like a pro
+============================
 
-Propro is dead, long live Propro! Propro lives on in Ansible.
+_This is currently a work in progress, so bare with me while continue working
+on it._
 
 ## Vagrant Dev VM
 

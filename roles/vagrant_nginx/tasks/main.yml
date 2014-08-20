@@ -1,0 +1,12 @@
+---
+- name: Add Nginx configuration for Vagrant
+  template: src=vagrant.j2 dest=/etc/nginx/sites-available/vagrant
+
+- name: Enable Nginx configuration for Vagrant
+  file:
+    src: /etc/nginx/sites-available/vagrant
+    dest: /etc/nginx/sites-enabled/vagrant
+    state: link
+
+- name: Restart Nginx
+  service: name=nginx state=restarted

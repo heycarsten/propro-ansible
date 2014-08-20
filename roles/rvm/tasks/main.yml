@@ -24,21 +24,16 @@
   - libffi-dev
 
 - name: Install RVM for user {{rvm_install_user}}
-  user: {{rvm_install_user}}
-  shell: curl -L https://get.rvm.io | bash -s {{rvm_channel}}
-
-- name: Set autolibs to read-fail
-  user: {{rvm_install_user}}
-  shell: rvm autolibs read-fail
+  sudo_user: '{{rvm_install_user}}'
+  sudo: yes
+  shell: \curl -L https://get.rvm.io | bash -s {{rvm_channel}} --autolibs fail creates=~/.rvm
 
 - name: Install Ruby {{rvm_ruby_version}} for user {{rvm_install_user}}
-  user: {{rvm_install_user}}
-  shell: rvm install {{rvm_ruby_version}}
-
-- name: Set Ruby {{rvm_ruby_version}} as default for user {{rvm_install_user}}
-  user: {{rvm_install_user}}
-  shell: rvm --default use {{rvm_ruby_version}}
+  sudo_user: '{{rvm_install_user}}'
+  sudo: yes
+  shell: ~/.rvm/bin/rvm --default install {{rvm_ruby_version}} creates=~/.rvm/rubies/ruby-{{rvm_ruby_version}}
 
 - name: Install Bundler gem
-  user: {{rvm_install_user}}
-  shell: gem install bundler
+  sudo_user: '{{rvm_install_user}}'
+  sudo: yes
+  shell: ~/.rvm/bin/rvm default do gem install bundler --no-document

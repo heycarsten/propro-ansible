@@ -1,0 +1,6 @@
+---
+nginx_max_connections: 2000
+nginx_max_body_size: '10m'
+nginx_http_conf:
+  client_body_temp_path: '/var/spool/nginx-client-body 1 2'
+  server_names_hash_bucket_size: 64

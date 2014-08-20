@@ -1,13 +1,11 @@
 ---
 - name: Update apt package sources
   apt: update_cache=yes cache_valid_time={{system_apt_cache_ttl}}
-  tags: essential_system_update
 
 - name: Upgrade installed packages
   apt: upgrade=safe
-  tags: essential_system_upgrade
 
-- name: Install essential packages
+- name: Install packages
   apt: name={{item}} state=latest
   with_items:
     - curl
@@ -17,4 +15,3 @@
     - git-core
     - tree
     - python-software-properties
-  tags: essential_system_install

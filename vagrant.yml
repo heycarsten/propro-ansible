@@ -1,6 +1,6 @@
 ---
 - name: Provision a Vagrant VM with RVM, Redis, Postgres, Node.js, and Nginx
-  hosts: localhost
+  hosts: all
   remote_user: vagrant
   gather_facts: yes
   sudo: yes
@@ -12,6 +12,7 @@
     - postgresql_version: 9.3
     - vagrant_user: vagrant
     - vagrant_data_directory: /vagrant
+    - nginx_max_connections: 100
 
   roles:
     - essential_system

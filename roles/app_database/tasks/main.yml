@@ -1,0 +1,17 @@
+---
+- name: Create database user {{app_database_user}} for application
+  postgresql_user: name={{app_database_user}} password={{app_database_password}}
+
+- name: Create database {{app_database_name}} for application
+  postgresql_db:
+    name:     '{{app_database_name}}'
+    encoding: '{{app_database_encoding}}'
+    owner:    '{{app_database_user}}'
+
+- name: Install extensions for database: {{app_database_name}}
+  command: 'psql template1 -c ''create extension if not exists "{{item}}";'''
+  sudo: yes
+  sudo_user: postgres
+  ignore_errors: yes
+  with_items: app_database_extensions
+  when: app_database_extensions is iterable

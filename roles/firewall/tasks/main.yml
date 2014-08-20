@@ -1,12 +1,10 @@
+---
 - name: Install Firewall (UFW)
-  apt: pkg=ufw state=latest
-  tags: install_ufw
+  apt: name=ufw state=latest
 
 - name: Set up firewall defaults
   ufw: state=enabled policy=deny logging=on
-  tags: configure_ufw_defaults
 
-- name: Allowing ports
+- name: Allow ports
   ufw: rule=allow port={{item}}
   with_items: {{firewall_allow_ports}}
-  tags: allow_ufw_ports

@@ -1,9 +1,15 @@
 ---
-- name: Add Bash helper aliases to /home/{{vagrant_user}}/.profile
-  lineinfile: dest=/home/{{vagrant_user}}/.profile line={{item}}
-  with_items:
-    - 'alias be="bundle exec"'
-    - 'alias e="./node_modules/ember-cli/bin/ember"'
-    - 'alias r="bin/rails"'
-    - 'alias v="cd {{vagrant_data_directory}}"'
-    - 'cd {{vagrant_data_directory}}'
+- name: Install manpages
+  apt: name=man state=latest
+
+- name: Add profile helpers to home directory
+  template:
+    src: aliases.j2
+    dest: /home/{{vagrant_user}}/.profile-helpers
+    owner: '{{vagrant_user}}'
+    group: '{{vagrant_user}}'
+
+- name: Add source to .profile for helpers
+  lineinfile:
+    dest: /home/{{vagrant_user}}/.profile
+    line: source ~/.profile-helpers

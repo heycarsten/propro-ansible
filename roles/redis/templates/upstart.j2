@@ -3,7 +3,7 @@ description "Redis"
 start on runlevel [23]
 stop on shutdown
 
-exec sudo -u {{redis_user}} /usr/local/bin/redis-server /etc/redis.conf
+exec sudo -u {{redis_user}} /usr/local/bin/redis-server {{redis_conf}}
 
 respawn
 respawn limit 5 60

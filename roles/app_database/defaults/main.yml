@@ -1,0 +1,16 @@
+---
+app_database_user: myapp
+app_database_password:
+app_database_name: myapp
+app_database_encoding: UTF-8
+app_database_extensions:
+  - btree_gin
+  - btree_gist
+  - fuzzystrmatch
+  - hstore
+  - intarray
+  - ltree
+  - pg_trgm
+  - tsearch2
+  - unaccent
+  - uuid-ossp

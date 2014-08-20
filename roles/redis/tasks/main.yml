@@ -11,21 +11,24 @@
   when: ansible_userspace_bits == "32"
 
 - name: Download Redis {{redis_version}}
-  get_url: url=http://download.redis.io/releases/redis-{{redis_version}}.tar.gz dest=/tmp/redis-{{redis_version}}.tgz
+  get_url:
+    url: http://download.redis.io/releases/redis-{{redis_version}}.tar.gz
+    dest: /tmp/redis-{{redis_version}}.tgz
+    force: yes
 
 - name: Extract Redis
-  unarchive: src=/tmp/redis-{{redis_version}}.tgz dest=/tmp
+  unarchive: copy=no src=/tmp/redis-{{redis_version}}.tgz dest=/tmp/
 
 - name: Compile Redis (64bit)
-  command: make /tmp/redis-{{redis_version}} && make
+  command: make -C /tmp/redis-{{redis_version}} creates=/tmp/redis-{{redis_version}}/src/redis-server
   when: ansible_userspace_bits == "64"
 
 - name: Compile Redis (32bit)
-  command: cd /tmp/redis-{{redis_version}} && make 32bit
+  command: make 32bit -C /tmp/redis-{{redis_version}} creates=/tmp/redis-{{redis_version}}/src/redis-server
   when: ansible_userspace_bits == "32"
 
 - name: Install Redis
-  command: cd /tmp/redis-{{redis-version}} && make install
+  command: make install -C /tmp/redis-{{redis_version}}
 
 - name: Add Redis group
   group: name={{redis_group}} system=yes state=present
@@ -34,20 +37,53 @@
   user: name={{redis_group}} group={{redis_group}} system=yes state=present
 
 - name: Create Redis data directory
-  file: path=/var/redis state=directory mode=0755 group={{redis_group}} owner={{redis_user}}
+  file:
+    path: '{{redis_data_directory}}'
+    state: directory
+    mode: '0755'
+    group: '{{redis_group}}'
+    owner: '{{redis_user}}'
+
+- name: Create Redis log directory
+  file:
+    path: '{{redis_log_directory}}'
+    state: directory
+    mode: '0755'
+    group: '{{redis_group}}'
+    owner: root
 
 - name: Create Redis logfile
-  file: path=/var/log/redis.log state=touch owner=redis group=redis mode=0644
+  file:
+    path: '{{redis_log_directory}}/{{redis_log_file}}'
+    state: touch
+    owner: '{{redis_user}}'
+    group: '{{redis_group}}'
+    mode: '0644'
+
+- name: Add Redis logrotate script
+  template:
+    src: logrotate.j2
+    dest: /etc/logrotate.d/redis
+    owner: root
+    group: root
+    mode: '0644'
 
 - name: Add Redis Upstart script
-  template: src=templates/upstart.j2 dest=/etc/init/redis.conf
+  template: src=upstart.j2 dest=/etc/init/redis.conf
 
 - name: Add Redis configuration file
-  template: src=templates/redis.conf.j2 dest=/etc/redis.conf group={{redis_group}} owner={{redis_user}}
+  template:
+    src: redis.conf.j2
+    dest: '{{redis_conf}}'
+    group: '{{redis_group}}'
+    owner: '{{redis_user}}'
   notify: Restart Redis
 
 - name: Clean up
   file: path=/tmp/{{item}} state=absent
   with_items:
-    - redis-{{redis-version}}
-    - redis-{{redis-version}}.tgz
+    - redis-{{redis_version}}
+    - redis-{{redis_version}}.tgz
+
+- name: Enable Redis service
+  service: name=redis enabled=yes state=restarted

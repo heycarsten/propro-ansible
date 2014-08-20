@@ -1,15 +1,17 @@
 ---
-- name: Provision a Vagrant VM with RVM, Redis, Postgres, Node, and Nginx
+- name: Provision a Vagrant VM with RVM, Redis, Postgres, Node.js, and Nginx
   hosts: localhost
   remote_user: vagrant
-  gather_facts: False
+  gather_facts: yes
   sudo: yes
+
   vars:
     - locale: en_US.UTF-8
     - rvm_ruby_version: 2.1.2
     - rvm_install_user: vagrant
-    - vagrant_data: /vagrant
-    - pg_version: 9.3
+    - postgresql_version: 9.3
+    - vagrant_user: vagrant
+    - vagrant_data_directory: /vagrant
 
   roles:
     - essential_system
@@ -20,4 +22,7 @@
     - nodejs
     - postgresql
     - redis
-    - vagrant_system
+    - nginx
+    - vagrant_nginx
+    - vagrant_postgresql
+    - vagrant_helpful

@@ -1,0 +1,53 @@
+---
+- name: Install Redis dependent packages
+  apt: name={{item}} state=latest
+  with_items:
+    - make
+    - build-essential
+    - tcl8.5
+
+- name: Install 32bit Redis dependent packages
+  apt: name=libc6-dev-i386 state=latest
+  when: ansible_userspace_bits == "32"
+
+- name: Download Redis {{redis_version}}
+  get_url: url=http://download.redis.io/releases/redis-{{redis_version}}.tar.gz dest=/tmp/redis-{{redis_version}}.tgz
+
+- name: Extract Redis
+  unarchive: src=/tmp/redis-{{redis_version}}.tgz dest=/tmp
+
+- name: Compile Redis (64bit)
+  command: make /tmp/redis-{{redis_version}} && make
+  when: ansible_userspace_bits == "64"
+
+- name: Compile Redis (32bit)
+  command: cd /tmp/redis-{{redis_version}} && make 32bit
+  when: ansible_userspace_bits == "32"
+
+- name: Install Redis
+  command: cd /tmp/redis-{{redis-version}} && make install
+
+- name: Add Redis group
+  group: name={{redis_group}} system=yes state=present
+
+- name: Add Redis user
+  user: name={{redis_group}} group={{redis_group}} system=yes state=present
+
+- name: Create Redis data directory
+  file: path=/var/redis state=directory mode=0755 group={{redis_group}} owner={{redis_user}}
+
+- name: Create Redis logfile
+  file: path=/var/log/redis.log state=touch owner=redis group=redis mode=0644
+
+- name: Add Redis Upstart script
+  template: src=templates/upstart.j2 dest=/etc/init/redis.conf
+
+- name: Add Redis configuration file
+  template: src=templates/redis.conf.j2 dest=/etc/redis.conf group={{redis_group}} owner={{redis_user}}
+  notify: Restart Redis
+
+- name: Clean up
+  file: path=/tmp/{{item}} state=absent
+  with_items:
+    - redis-{{redis-version}}
+    - redis-{{redis-version}}.tgz

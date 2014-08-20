@@ -1,0 +1,9 @@
+---
+- name: Add Bash helper aliases to /home/{{vagrant_user}}/.profile
+  lineinfile: dest=/home/{{vagrant_user}}/.profile line={{item}}
+  with_items:
+    - 'alias be="bundle exec"'
+    - 'alias e="./node_modules/ember-cli/bin/ember"'
+    - 'alias r="bin/rails"'
+    - 'alias v="cd {{vagrant_data_directory}}"'
+    - 'cd {{vagrant_data_directory}}'

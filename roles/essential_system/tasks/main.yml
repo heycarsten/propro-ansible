@@ -10,7 +10,11 @@
 - name: Install essential packages
   apt: name={{item}} state=latest
   with_items:
+    - curl
     - vim-nox
+    - less
     - htop
     - git-core
+    - tree
+    - python-software-properties
   tags: essential_system_install

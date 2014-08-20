@@ -1,0 +1,6 @@
+---
+- name: Add Nginx package repository
+  command: add-apt-repository ppa:nginx/stable
+
+- name: Install Nginx
+  apt: name=nginx-full state=latest update_cache=yes

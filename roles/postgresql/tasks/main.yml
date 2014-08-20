@@ -1,0 +1,48 @@
+---
+- name: Add PostgreSQL package repository
+  apt_repository: repo='deb http://apt.postgresql.org/pub/repos/apt/ {{ansible_distribution_release}}-pgdg main' state=present
+
+- name: Add PostgreSQL package repository key
+  apt_key: id=ACCC4CF8 url=http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc state=present
+
+- name: Updating package sources
+  apt: update_cache=yes
+
+- name: Installing PostgreSQL packages
+  apt: name={{item}} state=latest
+  with_items:
+    - postgresql-{{postgresql_version}}
+    - libpq-dev
+    - postgresql-contrib-{{postgresql_version}}
+    - pgtune
+    - ptop
+
+- name: Installing PostGIS packages
+  apt: name=postgresql-{{postgresql_version}}-postgis-scripts state=latest
+  when: postgresql_install_postgis
+
+- name: Backup PostgreSQL config
+  command: mv /etc/postgresql/{{postgresql_version}}/main/postgresql.conf /etc/postgresql/{{postgresql_version}}/main/postgresql.conf.old creates=/etc/postgresql/{{postgresql_version}}/main/postgresql.conf.old
+
+- name: Run pgtune against PostgreSQL config
+  command: pgtune -i /etc/postgresql/{{postgresql_version}}/main/postgresql.conf.old -o /etc/postgresql/{{postgresql_version}}/main/postgresql.conf --type=Web
+  sudo_user: postgres
+
+- name: Get memory page size
+  command: getconf PAGE_SIZE
+  register: page_size
+
+- name: Get total pages
+  command: getconf _PHYS_PAGES
+  register: phys_pages
+
+- name: Configure shared memory for PostgreSQL
+  sysctl: name={{item.0}} value={{item.1}} state=present reload=yes
+  with_items:
+    - ['vm.swappiness', 0]
+    - ['kernel.shmmax', {{phys_pages / 2}}]
+    - ['kernel.shmall', {{(phys_pages / 2) * page_size}}]
+  notify: Restart PostgreSQL
+
+- name: Enable PostgreSQL service
+  service: name=postgresql enabled=yes

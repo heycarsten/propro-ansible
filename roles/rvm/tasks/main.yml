@@ -2,26 +2,26 @@
 - name: Install RVM package dependencies
   apt: name={{item}} state=latest
   with_items:
-  - curl
-  - gawk
-  - g++
-  - gcc
-  - make
-  - libc6-dev
-  - libreadline6-dev
-  - zlib1g-dev
-  - libssl-dev
-  - libyaml-dev
-  - libsqlite3-dev
-  - sqlite3
-  - autoconf
-  - libgdbm-dev
-  - libncurses5-dev
-  - automake
-  - libtool
-  - bison
-  - pkg-config
-  - libffi-dev
+    - curl
+    - gawk
+    - g++
+    - gcc
+    - make
+    - libc6-dev
+    - libreadline6-dev
+    - zlib1g-dev
+    - libssl-dev
+    - libyaml-dev
+    - libsqlite3-dev
+    - sqlite3
+    - autoconf
+    - libgdbm-dev
+    - libncurses5-dev
+    - automake
+    - libtool
+    - bison
+    - pkg-config
+    - libffi-dev
 
 - name: Install RVM for user {{rvm_install_user}}
   sudo_user: '{{rvm_install_user}}'

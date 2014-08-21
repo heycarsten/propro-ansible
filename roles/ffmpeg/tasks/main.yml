@@ -101,6 +101,7 @@
   command: >
     ./configure
     --disable-examples
+    --enable-shared
     --prefix=/usr/local
     chdir=/tmp/libvpx-v{{ffmpeg_vpx_version}}
 

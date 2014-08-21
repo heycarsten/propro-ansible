@@ -113,7 +113,7 @@
     - make install
     - make clean
 
-- name: Download
+- name: Clone
   git:
     repo: git://source.ffmpeg.org/ffmpeg.git
     accept_hostkey: yes

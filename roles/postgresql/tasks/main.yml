@@ -46,7 +46,7 @@
   register: kernel_shmmax_result
 
 - name: Get memory page size
-  shell: expr {{kernel_shmmax_result.stdout}} * {{page_size_result.stdout}}
+  shell: expr {{kernel_shmmax_result.stdout}} \* {{page_size_result.stdout}}
   register: kernel_shmall_result
 
 - name: Configure shared memory for PostgreSQL

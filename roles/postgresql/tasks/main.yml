@@ -52,7 +52,6 @@
 - name: Configure shared memory for PostgreSQL
   sysctl: name={{item.key}} value={{item.value}} state=present reload=yes
   with_dict:
-    vm.swappiness: '0'
     kernel.shmmax: '{{kernel_shmmax_result.stdout}}'
     kernel.shmall: '{{kernel_shmall_result.stdout}}'
   notify: Restart PostgreSQL

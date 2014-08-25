@@ -1,9 +1,6 @@
 ---
-- name: Update apt package sources
-  apt: update_cache=yes cache_valid_time={{system_apt_cache_ttl}}
-
-- name: Upgrade installed packages
-  apt: upgrade=safe
+- name: Update sources and upgrade packages
+  apt: upgrade=safe update_cache=yes cache_valid_time={{system_apt_cache_ttl}}
 
 - name: Install packages
   apt: name={{item}} state=latest

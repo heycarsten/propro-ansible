@@ -154,7 +154,7 @@
     - ldconfig -v
 
 - name: Clean
-  file: '{{item}} state=absent'
+  file: 'path={{item}} state=absent'
   with_items:
     - /tmp/yasm-{{ffmpeg_yasm_version}}.tgz
     - /tmp/yasm-{{ffmpeg_yasm_version}}

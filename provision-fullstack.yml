@@ -1,0 +1,37 @@
+---
+- name: "Provision Full-Stack Web Server: PG, Nginx, App"
+  hosts: all
+  gather_facts: yes
+
+  vars:
+    - admin_password: ?????
+    - admin_authorized_githubbers:
+      - ?????
+    - deploy_authorized_githubbers:
+      - ?????
+    - database_user: ?????
+    - database_name: ???????????
+    - app_env: production
+    - app_domain: myapp.net
+    - rvm_ruby_version: 2.1.2
+    - rvm_install_user: '{{deploy_user}}'
+    - postgresql_version: 9.3
+    - nginx_max_connections: 2000
+    - redis_bind: 127.0.0.1
+    - firewall_allow_ports:
+      - 80
+      - 442
+      - 22
+
+  roles:
+    - essential_system
+    - remotely_accessible
+    - nodejs
+    - postgresql
+    - redis
+    - nginx
+    - deployable
+    - rvm
+    - database
+    - puma
+    - sidekiq

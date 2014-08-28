@@ -1,0 +1,3 @@
+---
+puma_user: deploy
+puma_apps: []

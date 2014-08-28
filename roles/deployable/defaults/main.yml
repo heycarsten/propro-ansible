@@ -1,0 +1,4 @@
+---
+deploy_user: deploy
+deploy_authorized_githubbers: []
+deploy_data_directory: /sites

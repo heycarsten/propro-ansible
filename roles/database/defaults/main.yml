@@ -1,11 +1,10 @@
 ---
-app_database_user: myapp
-app_database_password:
-app_database_name: myapp
-app_database_encoding: UTF-8
-app_database_extensions:
+database_encoding: UTF-8
+database_extensions:
   - btree_gin
   - btree_gist
+  - cube
+  - earthdistance
   - fuzzystrmatch
   - hstore
   - intarray

@@ -1,0 +1,18 @@
+---
+- name: Create database user {{database_user}}
+  postgresql_user: name={{database_user}} password={{database_password}}
+
+- name: Create database {{database_name}}
+  postgresql_db:
+    name: '{{database_name}}'
+    encoding: '{{database_encoding}}'
+    owner: '{{database_user}}'
+    state: present
+
+- name: Install extensions for database: {{database_name}}
+  command: 'psql {{database_name}} -c ''create extension if not exists "{{item}}";'''
+  sudo: yes
+  sudo_user: postgres
+  ignore_errors: yes
+  with_items: database_extensions
+  when: database_extensions is iterable

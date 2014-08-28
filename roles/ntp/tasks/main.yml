@@ -1,6 +1,0 @@
----
-- name: Install NTP
-  apt: name=ntp state=latest
-
-- name: Enable NTP
-  service: name=ntp state=started enabled=yes

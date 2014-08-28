@@ -18,14 +18,11 @@
     - postgresql_version: 9.3
     - nginx_max_connections: 2000
     - redis_bind: 127.0.0.1
-    - firewall_allow_ports:
-      - 80
-      - 442
-      - 22
 
   roles:
     - essential_system
     - remotely_accessible
+    - http_frontend
     - nodejs
     - postgresql
     - redis

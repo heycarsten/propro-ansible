@@ -1,0 +1,39 @@
+---
+- name: Create state directory
+  file:
+    path: '{{puma_state_directory}}'
+    state: directory
+    owner: '{{deploy_user}}'
+
+- name: Add Upstart init config
+  template:
+    src: upstart.conf.j2
+    dest: /etc/init/{{puma_init_ident}}.conf
+    state: present
+
+- name: Add sudo entries for initctl
+  lineinfile:
+    dest: /etc/sudoers
+    line: '{{deploy_user}} ALL=NOPASSWD: /sbin/initctl {{item}} {{puma_init_ident}}'
+    state: present
+  with_items:
+    - start
+    - stop
+    - reload
+    - restart
+
+- name: Add Nginx site
+  template:
+    src: nginx-site.j2
+    dest: /etc/nginx/sites-available/{{app_domain}}
+    state: present
+
+- name: Enable Nginx site
+  file:
+    src: /etc/nginx/sites-available/{{app_domain}}
+    path: /etc/nginx/sites-enabled/{{app_domain}}
+    state: link
+  notify: Restart Nginx
+
+- name: Enable Puma service
+  service: name={{puma_init_ident}} enabled=yes state=stopped

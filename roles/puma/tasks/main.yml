@@ -1,8 +1,0 @@
----
-- name: Create {{data_directory}} directory
-  file: path={{data_directory}} state=present
-
-- name: Configure deploy directories
-  with_items:
-    - /sites/{{domain}}
-    - /sites/{{doamin}}

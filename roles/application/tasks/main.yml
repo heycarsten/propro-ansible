@@ -1,0 +1,33 @@
+---
+- name: Add {{deploy_user}} user
+  user: name={{deploy_user}} shell=/bin/bash
+
+- name: Download authorized keys from GitHub for {{deploy_user}}
+  connection: local
+  get_url:
+    src: https://github.com/{{item}}.keys
+    dest: /tmp/github.{{item}}.keys
+  with_items: '{{deploy_authorized_githubbers}}'
+
+- name: Install authorized keys for {{deploy_user}}
+  authorized_key:
+    user: '{{deploy_user}}'
+    key: "{{lookup('file', '/tmp/github.' + item + '.keys')}}"
+  with_items: '{{deploy_authorized_githubbers}}'
+
+- name: Create root data directory
+  file: path={{deploy_data_directory}} state=directory
+
+- name: Create application deploy tree (Capistrano)
+  file: path={{item}} state=directory owner={{deploy_user}}
+  with_items:
+    - '{{app_directory}}'
+    - '{{app_releases_directory}}'
+    - '{{app_repo_directory}}'
+    - '{{app_shared_directory}}'
+    - '{{app_shared_log_directory}}'
+    - '{{app_shared_tmp_directory}}'
+    - '{{app_shared_config_directory}}'
+    - '{{app_shared_bin_directory}}'
+    - '{{app_shared_bundle_directory}}'
+    - '{{app_shared_sockets_directory}}'

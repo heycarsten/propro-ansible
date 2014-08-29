@@ -1,0 +1,26 @@
+---
+- name: Install worker init conf
+  template:
+    src: worker-upstart.conf.j2
+    dest: /etc/init/{{sidekiq_init_worker_ident}}.conf
+    state: present
+
+- name: Install worker-cluster init conf
+  template:
+    src: worker-cluster-upstart.conf.j2
+    dest: /etc/init/{{sidekiq_init_worker_cluster_ident}}.conf
+    state: present
+
+- name: Add sudo entries for initctl (worker-cluster)
+  lineinfile:
+    dest: /etc/sudoers
+    line: '{{deploy_user}} ALL=NOPASSWD: /sbin/initctl {{item}} {{sidekiq_init_worker_cluster_ident}}'
+    state: present
+  with_items:
+    - start
+    - stop
+    - reload
+    - restart
+
+- name: Enable worker-cluster service
+  service: name={{sidekiq_init_worker_cluster_ident}} enabled=yes state=stopped

@@ -22,6 +22,14 @@
     - reload
     - restart
 
+- name: Add logrotate for application log
+  template:
+    src: logrotate.j2
+    dest: /etc/logrotate.d/{{puma_init_ident}}
+    owner: root
+    group: root
+    mode: '0664'
+
 - name: Add Nginx site
   template:
     src: nginx-site.j2

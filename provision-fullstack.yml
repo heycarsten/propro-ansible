@@ -24,6 +24,7 @@
     - networking
     - remotely_accessible
     - http_frontend
+    - application_puma
     - nodejs
     - postgresql
     - redis
@@ -31,5 +32,4 @@
     - deployable
     - rvm
     - database
-    - puma
     - sidekiq

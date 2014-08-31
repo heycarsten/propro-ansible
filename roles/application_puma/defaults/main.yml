@@ -12,3 +12,6 @@ puma_nginx_fonts_origin: enforce
 puma_nginx_redirect_www: yes
 puma_nginx_enable_gzip_static_assets: yes
 puma_nginx_assets_directory_name: assets
+
+puma_logrotate_event: 'size 25M'
+puma_logrotate_maxrotations: 82

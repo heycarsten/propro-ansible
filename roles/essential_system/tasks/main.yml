@@ -6,6 +6,9 @@
   apt: name={{item}} state=latest
   with_items: '{{essential_packages}}'
 
+- name: Set hostname
+  hostname: name={{hostname}}
+
 - name: Generate locale {{locale}}
   locale_gen: name={{locale}} state=present
 

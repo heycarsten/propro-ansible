@@ -6,6 +6,7 @@
   sudo: yes
 
   vars:
+    - hostname: vagrant
     - rvm_ruby_version: 2.1.2
     - rvm_install_user: vagrant
     - postgresql_version: 9.3

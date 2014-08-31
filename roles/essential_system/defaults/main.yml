@@ -1,4 +1,5 @@
 ---
+hostname: '{{ansible_hostname}}'
 system_apt_cache_ttl: 3600
 locale: en_US.UTF-8
 timezone: UTC

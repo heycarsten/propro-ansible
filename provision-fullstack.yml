@@ -23,13 +23,23 @@
     - essential_system
     - networking
     - remotely_accessible
-    - http_frontend
+    - application
+    - rvm
     - application_puma
     - nodejs
     - postgresql
     - redis
     - nginx
-    - deployable
-    - rvm
     - database
-    - sidekiq
+    - firewall
+
+  post_tasks:
+    - name: Allow HTTP traffic
+      ufw: rule=allow port=80 state=enabled proto=tcp
+
+    - name: Allow HTTPS traffic
+      ufw: rule=allow port=443 state=enabled proto=tcp
+
+    - name: Restart VPS
+      command: 'shutdown -r now "System has been provisioned"'
+      ignore_errors: yes

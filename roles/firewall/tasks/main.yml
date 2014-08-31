@@ -1,10 +1,15 @@
 ---
-- name: Install Firewall (UFW)
+- name: Install (UFW)
   apt: name=ufw state=latest
 
-- name: Set up firewall defaults
-  ufw: state=enabled policy=deny logging=on
+- name: Configure defaults
+  ufw: policy=deny logging=on
 
-- name: Allow ports
-  ufw: rule=allow port={{item}}
-  with_items: {{firewall_allow_ports}}
+- name: Allow SSH
+  ufw: rule=allow port=ssh proto=tcp
+
+- name: Allow NTP
+  ufw: rule=allow port=123 proto=udp direction=outgoing
+
+- name: Enable
+  ufw: state=enabled

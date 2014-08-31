@@ -21,6 +21,7 @@
 
   roles:
     - essential_system
+    - networking
     - remotely_accessible
     - http_frontend
     - nodejs

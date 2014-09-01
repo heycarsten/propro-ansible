@@ -16,3 +16,9 @@
   ignore_errors: yes
   with_items: database_extensions
   when: database_extensions is iterable
+
+- name: Add HBA entries for trusted IPs
+  lineinfile:
+    dest: '{{postgres_hba_conf}}'
+    line: 'host {{database_name}} {{database_user}} {{item}}/32 trust'
+  with_items: database_trusted_ips

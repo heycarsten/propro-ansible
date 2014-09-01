@@ -1,5 +1,6 @@
 ---
 database_encoding: UTF-8
+database_trusted_ips: []
 database_extensions:
   - btree_gin
   - btree_gist

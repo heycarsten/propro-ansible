@@ -12,7 +12,7 @@
 
   vars_prompt:
     - name: admin_password
-      prompt 'Enter password for {{admin_user}}'
+      prompt: 'Enter password for {{admin_user}}'
       private: yes
 
   roles:

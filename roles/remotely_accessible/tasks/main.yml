@@ -5,7 +5,7 @@
 
 - name: Verify admin authorized keys are provided
   fail: msg="admin_authorized_githubbers must contain at least one GitHub username"
-  when: admin_authorized_githubbers.length is 0
+  when: admin_authorized_githubbers|length == 0
 
 - name: Encrypt password for {{admin_user}}
   command: 'openssl passwd -salt $(openssl rand -base64 32) -1 ''{{admin_password}}'''

@@ -5,7 +5,7 @@
 - name: Download authorized keys from GitHub for {{deploy_user}}
   connection: local
   get_url:
-    src: https://github.com/{{item}}.keys
+    url: https://github.com/{{item}}.keys
     dest: /tmp/github.{{item}}.keys
   with_items: '{{deploy_authorized_githubbers}}'
 

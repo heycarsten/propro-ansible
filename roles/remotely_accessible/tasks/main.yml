@@ -20,7 +20,7 @@
 - name: Download authorized keys from GitHub for {{admin_user}}
   connection: local
   get_url:
-    src: https://github.com/{{item}}.keys
+    url: https://github.com/{{item}}.keys
     dest: /tmp/github.{{item}}.keys
   with_items: '{{admin_authorized_githubbers}}'
 

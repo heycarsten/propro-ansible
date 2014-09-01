@@ -9,7 +9,7 @@
     owner: '{{database_user}}'
     state: present
 
-- name: Install extensions for database: {{database_name}}
+- name: "Install extensions for database: {{database_name}}"
   command: 'psql {{database_name}} -c ''create extension if not exists "{{item}}";'''
   sudo: yes
   sudo_user: postgres

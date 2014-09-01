@@ -7,15 +7,16 @@
   fail: msg="admin_authorized_githubbers must contain at least one GitHub username"
   when: not admin_authorized_githubbers
 
-- name: 'Encrypt password for {{admin_user}}'
-  command: 'openssl passwd -salt $(openssl rand -base64 32) -1 ''{{admin_password}}'''
-  register: encrypted_admin_password
-
 - name: 'Add {{admin_user}} user'
   user:
     name: '{{admin_user}}'
     shell: /bin/bash
-    password: '{{encrypted_admin_password.stdout}}'
+    state: present
+  register: add_admin_user_result
+
+- name: 'Set password for {{admin_user}} user'
+  command: 'echo ''{{admin_user}}:{{admin_password}}'' | chpasswd'
+  when: add_admin_user_result.changed
 
 - name: 'Download authorized keys from GitHub for {{admin_user}}'
   connection: local

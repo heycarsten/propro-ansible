@@ -22,13 +22,13 @@
   get_url:
     src: https://github.com/{{item}}.keys
     dest: /tmp/github.{{item}}.keys
-  with_items: '{{admin_authorized_githubbers}}'
+  with_items: admin_authorized_githubbers
 
 - name: Install authorized keys for {{admin_user}}
   authorized_key:
     user: '{{admin_user}}'
     key: "{{lookup('file', '/tmp/github.' + item + '.keys')}}"
-  with_items: '{{admin_authorized_githubbers}}'
+  with_items: admin_authorized_githubbers
 
 - name: Grant {{admin_user}} sudo privileges
   lineinfile:

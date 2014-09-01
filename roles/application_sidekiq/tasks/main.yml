@@ -3,13 +3,15 @@
   template:
     src: worker-upstart.conf.j2
     dest: /etc/init/{{sidekiq_init_worker_ident}}.conf
-    state: present
+    owner: root
+    group: root
 
 - name: Install worker-cluster init conf
   template:
     src: worker-cluster-upstart.conf.j2
     dest: /etc/init/{{sidekiq_init_worker_cluster_ident}}.conf
-    state: present
+    owner: root
+    group: root
 
 - name: Add sudo entries for initctl (worker-cluster)
   lineinfile:

@@ -7,13 +7,13 @@
   get_url:
     src: https://github.com/{{item}}.keys
     dest: /tmp/github.{{item}}.keys
-  with_items: '{{deploy_authorized_githubbers}}'
+  with_items: deploy_authorized_githubbers
 
 - name: Install authorized keys for {{deploy_user}}
   authorized_key:
     user: '{{deploy_user}}'
     key: "{{lookup('file', '/tmp/github.' + item + '.keys')}}"
-  with_items: '{{deploy_authorized_githubbers}}'
+  with_items: deploy_authorized_githubbers
 
 - name: Create root data directory
   file: path={{deploy_data_directory}} state=directory

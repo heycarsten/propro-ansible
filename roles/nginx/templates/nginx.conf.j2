@@ -1,9 +1,9 @@
 #{{ansible_managed}}
 
-user www-data;
+user {{nginx_user}};
 pid /var/run/nginx.pid;
 ssl_engine dynamic;
-worker_processes {{ansible_processor_count}};
+worker_processes {{nginx_worker_processes}};
 
 events {
   multi_accept on;

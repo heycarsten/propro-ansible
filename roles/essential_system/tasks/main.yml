@@ -4,7 +4,7 @@
 
 - name: Install base packages
   apt: name={{item}} state=latest
-  with_items: '{{essential_packages}}'
+  with_items: essential_packages
 
 - name: Set hostname
   hostname: name={{hostname}}

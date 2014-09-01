@@ -35,7 +35,7 @@
 
 - name: Set bound IP
   lineinfile:
-    dest: {{postgresql_config_path}}
+    dest: '{{postgresql_config_path}}'
     line: 'listen_addresses = ''localhost,{{postgresql_bind_ip}}'''
     regexp: ^listen_addresses
   when: postgresql_bind_ip is defined

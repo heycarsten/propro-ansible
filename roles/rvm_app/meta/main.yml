@@ -1,4 +1,4 @@
 ---
 dependencies:
-  - role: app
-  - role: rvm, rvm_install_user: '{{app_user}}'
+  - { role: 'app' }
+  - { role: 'rvm', rvm_install_user: '{{app_user}}' }

@@ -1,4 +1,4 @@
 ---
 dependencies:
-  - role: rvm_app
-  - role: nginx
+  - { role: 'rvm_app' }
+  - { role: 'nginx' }

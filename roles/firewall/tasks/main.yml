@@ -9,7 +9,7 @@
   ufw: rule=allow port=ssh proto=tcp
 
 - name: Allow NTP
-  ufw: rule=allow port=123 proto=udp direction=outgoing
+  ufw: rule=allow port=123 proto=udp
 
 - name: Enable
   ufw: state=enabled

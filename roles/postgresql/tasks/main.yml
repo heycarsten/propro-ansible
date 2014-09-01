@@ -36,9 +36,9 @@
 - name: Set bound IP
   lineinfile:
     dest: '{{postgresql_config_path}}'
-    line: 'listen_addresses = ''localhost,{{postgresql_bind_ip}}'''
+    line: 'listen_addresses = ''localhost,{{postgresql_bind}}'''
     regexp: ^listen_addresses
-  when: postgresql_bind_ip is defined
+  when: postgresql_bind is defined
 
 - name: Get _PHYS_PAGES
   shell: getconf _PHYS_PAGES

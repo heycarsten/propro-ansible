@@ -1,11 +1,12 @@
 ---
-deploy_user: deploy
-# deploy_authorized_githubbers: []
-deploy_data_directory: /sites
-# app_domain: example.com
+app_user: deploy
+app_group: deploy
+# app_authorized_githubbers: []
+app_data_directory: /sites
+# app_domain:
 app_env: production
 app_ident: '{{app_domain|replace(''.'', ''-'')}}'
-app_directory: '{{deploy_data_directory}}/{{app_domain}}'
+app_directory: '{{app_data_directory}}/{{app_domain}}'
 app_current_directory: '{{app_directory}}/current'
 app_releases_directory: '{{app_directory}}/releases'
 app_repo_directory: '{{app_directory}}/repo'

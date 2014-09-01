@@ -7,11 +7,11 @@ stop on (stopping {{sidekiq_init_worker_custer_ident}} or runlevel [06])
 
 normal exit 0 TERM # Term is sent by sidekiqctl when stopping
 
-setuid {{deploy_user}}
+setuid {{app_user}}
 
 instance $index
 
-env PATH=/home/{{deploy_user}}/.rvm/wrappers/default
+env PATH=/home/{{app_user}}/.rvm/wrappers/default
 
 chdir {{app_current_directory}}
 

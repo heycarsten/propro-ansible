@@ -1,6 +1,9 @@
 ---
 - name: Create database user {{database_user}}
-  postgresql_user: name={{database_user}} password={{database_password}}
+  postgresql_user:
+    name: '{{database_user}}'
+    password: '{{database_password}}'
+    state: present
 
 - name: Create database {{database_name}}
   postgresql_db:
@@ -8,6 +11,8 @@
     encoding: '{{database_encoding}}'
     owner: '{{database_user}}'
     state: present
+  sudo: yes
+  sudo_user: postgres
 
 - name: Install extensions for database: {{database_name}}
   command: 'psql {{database_name}} -c ''create extension if not exists "{{item}}";'''

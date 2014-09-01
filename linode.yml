@@ -1,10 +1,11 @@
 ---
-- name: "Provision Full-Stack Web Server: PG, Nginx, App"
+- name: Gather facts from all servers
   hosts: all
-  gather_facts: yes
+
+- name: Provision Full-Stack servers
+  hosts: fullstackservers
 
   vars:
-    rvm_ruby_version: 2.1.2
     postgresql_version: 9.3
     nginx_max_connections: 2000
     redis_bind: 127.0.0.1

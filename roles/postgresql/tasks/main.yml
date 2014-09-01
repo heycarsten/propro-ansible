@@ -33,6 +33,13 @@
   sudo: yes
   sudo_user: postgres
 
+- name: Set bound IP
+  lineinfile:
+    dest: {{postgresql_config_path}}
+    line: 'listen_addresses = ''localhost,{{postgresql_bind_ip}}'''
+    regexp: ^listen_addresses
+  when: postgresql_bind_ip is defined
+
 - name: Get _PHYS_PAGES
   shell: getconf _PHYS_PAGES
   register: phys_pages_result

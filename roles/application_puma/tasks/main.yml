@@ -29,11 +29,16 @@
     group: root
     mode: '0664'
 
+- name: Ensure Nginx directories are created
+  file: path=/etc/nginx/{{item}} state=directory
+  with_items:
+    - sites-available
+    - sites-enabled
+
 - name: Add Nginx site
   template:
     src: nginx-site.j2
     dest: /etc/nginx/sites-available/{{app_domain}}
-    state: present
 
 - name: Enable Nginx site
   file:

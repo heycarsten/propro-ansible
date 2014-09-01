@@ -1,7 +1,10 @@
-# Production servers for MyApp
+# Here is
+
+[poorservers]
+66.175.108.44 fqdn=irc.myname.com hostname=irc has_workers=yes
 
 [dbservers]
-db1.myapp.com hostname=db1 private_ip=10.0.0.1
+182.33.59.13 fqdn=db.myapp.com hostname=db private_ip=10.0.0.1
 
 [appservers]
 182.33.49.121 fqdn=app1.myapp.com hostname=app1 private_ip=10.0.1.1
@@ -13,3 +16,16 @@ db1.myapp.com hostname=db1 private_ip=10.0.0.1
 182.33.49.31 fdqn=worker2.myapp.com hostname=worker2 private_ip=10.0.2.2
 182.33.49.41 fqdn=worker3.myapp.com hostname=worker3 private_ip=10.0.2.3
 182.33.49.51 fdqn=worker4.myapp.com hostname=worker4 private_ip=10.0.2.4
+
+[linode:children]
+dbservers
+appservers
+workers
+
+[linode:vars]
+private_netmask=255.255.128.0
+public_netmask=255.255.255.0
+
+[digitalocean:vars]
+private_netmask=255.255.0.0
+public_netmask=255.255.240.0

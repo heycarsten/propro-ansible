@@ -2,7 +2,7 @@ Vagrant.configure('2') do |config|
   # Assume that the propro repo is copied into the .ansible folder of the
   # project
   config.vm.provision 'ansible' do |conf|
-    conf.playbook = '.ansible/vagrant.yml'
+    conf.playbook = '.ansible/provision-vagrant.yml'
     conf.sudo     = true
   end
 

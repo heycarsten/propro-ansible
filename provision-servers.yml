@@ -1,0 +1,50 @@
+# This playbook is for provisioning cold servers, for example. If you create
+# a new Linode, deploy Ubuntu to it, and boot it, this will be the next step.
+---
+- name: Provision Full-Stack servers
+  hosts: poorservers
+
+  vars:
+    redis_bind: 127.0.0.1
+    has_workers: no
+
+  roles:
+    - vps
+    - redis
+    - database
+    - rvm_app_puma
+    - { name: 'rvm_app_sidekiq', when: 'has_workers' }
+    - nodejs
+
+  post_tasks:
+    - name: Allow HTTP traffic
+      ufw: rule=allow port=80 state=enabled proto=tcp
+
+    - name: Allow HTTPS traffic
+      ufw: rule=allow port=443 state=enabled proto=tcp
+
+    - name: Restart VPS
+      command: 'shutdown -r now "System has been provisioned"'
+      ignore_errors: yes
+
+- name: Provision database servers
+  hosts: dbservers
+
+  vars:
+    redis_bind: '{{private_ip}}'
+
+  vars_prompt:
+    - name: admin_password
+      prompt: 'Enter password for {{admin_user}}'
+      private: yes
+
+  roles:
+    - vps
+    - redis
+    - database
+
+- name: Provision application servers
+  hosts: appservers
+
+- name: Provision worker servers
+  hosts: workers

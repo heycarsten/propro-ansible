@@ -26,10 +26,10 @@
   when: postgresql_install_postgis
 
 - name: Backup PostgreSQL config
-  command: mv /etc/postgresql/{{postgresql_version}}/main/postgresql.conf /etc/postgresql/{{postgresql_version}}/main/postgresql.conf.old creates=/etc/postgresql/{{postgresql_version}}/main/postgresql.conf.old
+  command: mv {{postgresql_config_path}} {{postgresql_config_path}}.old creates={{postgresql_config_path}}.old
 
 - name: Run pgtune against PostgreSQL config
-  command: pgtune -i /etc/postgresql/{{postgresql_version}}/main/postgresql.conf.old -o /etc/postgresql/{{postgresql_version}}/main/postgresql.conf --type=Web
+  command: pgtune -i {{postgresql_config_path}}.old -o {{postgresql_config_path}} --type=Web
   sudo: yes
   sudo_user: postgres
 

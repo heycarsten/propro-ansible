@@ -10,7 +10,7 @@ iface eth0 inet static
  gateway {{gateway}}
  dns-nameservers {{dns_servers|join(' ')}}
 
-{% if private_ip %}
+{% if private_ip is defined%}
 # Private interface
 iface eth0:1 inet static
  address {{private_ip}}

@@ -1,11 +1,13 @@
+# This will provision a cold Linode into a full-stack web server, which just
+# means a web server that has everything on it, database, app server, nginx,
+# workers.
 ---
-- name: Gather facts from all servers
-  hosts: all
-
 - name: Provision Full-Stack servers
-  hosts: fullstackservers
+  hosts: fullstack
 
   vars:
+    private_netmask: 255.255.128.0 # DigitalOcean is 255.255.0.0
+    public_netmask: 255.255.255.0 # DigitalOcean is 255.255.240.0
     postgresql_version: 9.3
     nginx_max_connections: 2000
     redis_bind: 127.0.0.1

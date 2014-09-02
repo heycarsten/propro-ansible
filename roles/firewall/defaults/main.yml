@@ -1,0 +1,4 @@
+---
+firewall_allow_public_ports: []
+firewall_allow_private_ports: []
+firewall_allow_private_ips: '{{groups.db_clients|map(attribute="private_ip")}}'

@@ -1,0 +1,4 @@
+---
+firewall_allow_public_ports:
+  - 80
+  - 443

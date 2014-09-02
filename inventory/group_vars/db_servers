@@ -1,0 +1,5 @@
+---
+redis_bind: '{{private_ip}}'
+firewall_allow_private_ports:
+  - 5432 # Postgres
+  - 6379 # Redis

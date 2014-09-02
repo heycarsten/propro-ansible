@@ -13,3 +13,15 @@
 
 - name: Enable
   ufw: state=enabled
+
+- name: Allow public traffic
+  ufw: rule=allow port={{item}} state=enabled proto=tcp
+  with_items: firewall_allow_public_ports
+  when: firewall_allow_public_ports
+
+- name: Allow private traffic
+  ufw: rule=allow port={{item.0}} from_ip={{item.1}} state=enabled
+  with_nested:
+    - firewall_allow_private_ports
+    - firewall_allow_private_ips
+  when: firewall_allow_private_ports

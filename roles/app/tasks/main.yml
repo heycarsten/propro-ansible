@@ -1,8 +1,10 @@
 ---
 - name: 'Add {{app_user}} user'
+  tags: setup
   user: name={{app_user}} shell=/bin/bash
 
 - name: 'Download authorized keys from GitHub for {{app_user}}'
+  tags: ['config_ssh_keys', 'config']
   connection: local
   get_url:
     url: https://github.com/{{item}}.keys
@@ -10,15 +12,18 @@
   with_items: app_authorized_githubbers
 
 - name: 'Install authorized keys for {{app_user}}'
+  tags: ['config_ssh_keys', 'config']
   authorized_key:
     user: '{{app_user}}'
     key: "{{lookup('file', '/tmp/github.' + item + '.keys')}}"
   with_items: app_authorized_githubbers
 
 - name: Create root data directory
+  tags: setup
   file: path={{app_data_directory}} state=directory
 
 - name: Create application deploy tree (Capistrano)
+  tags: setup
   file: 'path={{item}} state=directory owner={{app_user}}'
   with_items:
     - '{{app_directory}}'
@@ -31,3 +36,21 @@
     - '{{app_shared_bin_directory}}'
     - '{{app_shared_bundle_directory}}'
     - '{{app_shared_sockets_directory}}'
+
+- name: Update database.yml
+  tags: ['config_database_yml', 'config']
+  template:
+    src: database.yml.j2
+    dest: '{{app_shared_config_directory}}/database.yml'
+    owner: '{{app_user}}'
+    group: '{{app_group}}'
+    mode: '0640'
+
+- name: Update secrets.yml
+  tags: ['config_secrets_yml', 'config']
+  template:
+    src: secrets.yml.j2
+    dest: '{{app_shared_config_directory}}/secrets.yml'
+    owner: '{{app_user}}'
+    group: '{{app_group}}'
+    mode: '0640'

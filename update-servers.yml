@@ -1,5 +1,0 @@
-# This playbook is for updating application and authentication configuration
-# on existing servers
----
-- name: Update appserver configuration
-- name: Update dbserver configuration

@@ -1,11 +1,13 @@
 ---
-- name: Create database user {{database_user}}
+- name: 'Create database user {{database_user}}'
+  tags: ['db_setup', 'setup']
   postgresql_user:
     name: '{{database_user}}'
     password: '{{database_password}}'
     state: present
 
-- name: Create database {{database_name}}
+- name: 'Create database {{database_name}}'
+  tags: ['db_setup', 'setup']
   postgresql_db:
     name: '{{database_name}}'
     encoding: '{{database_encoding}}'
@@ -14,7 +16,8 @@
   sudo: yes
   sudo_user: postgres
 
-- name: Install extensions for database: {{database_name}}
+- name: 'Install extensions for database: {{database_name}}'
+  tags: ['db_config', 'config']
   command: 'psql {{database_name}} -c ''create extension if not exists "{{item}}";'''
   sudo: yes
   sudo_user: postgres
@@ -22,8 +25,15 @@
   with_items: database_extensions
   when: database_extensions is iterable
 
-- name: Add HBA entries for trusted IPs
+- name: Clear existing auth entries
+  tags: ['db_config', 'config']
+  replace:
+    dest: '{{postgres_hba_conf}}'
+    regexp: '^host {{database_name}} {{database_user}} [0-9\.]+/32 trust$'
+
+- name: Add auth entries for trusted IPs
+  tags: ['db_config', 'config']
   lineinfile:
     dest: '{{postgres_hba_conf}}'
     line: 'host {{database_name}} {{database_user}} {{item}}/32 trust'
-  with_items: database_trusted_ips
+  with_items: firewall_allow_private_ips

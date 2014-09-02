@@ -1,27 +1,38 @@
 ---
-- name: Install (UFW)
+- name: Install UFW
+  tags: setup
   apt: name=ufw state=latest
 
+- name: Reset UFW
+  tags: config
+  ufw: state=reset
+
 - name: Configure defaults
+  tags: config
   ufw: policy=deny logging=on
 
 - name: Allow SSH
-  ufw: rule=allow port=ssh proto=tcp
+  tags: config
+  ufw: rule=allow port=22 proto=tcp
 
 - name: Allow NTP
+  tags: config
   ufw: rule=allow port=123 proto=udp
 
-- name: Enable
-  ufw: state=enabled
-
 - name: Allow public traffic
+  tags: config
   ufw: rule=allow port={{item}} state=enabled proto=tcp
   with_items: firewall_allow_public_ports
   when: firewall_allow_public_ports
 
 - name: Allow private traffic
-  ufw: rule=allow port={{item.0}} from_ip={{item.1}} state=enabled
+  tags: config
+  ufw: rule=allow port={{item.0}} from={{item.1}} state=enabled
   with_nested:
     - firewall_allow_private_ports
     - firewall_allow_private_ips
   when: firewall_allow_private_ports
+
+- name: Enable
+  tags: config
+  ufw: state=enabled

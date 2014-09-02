@@ -1,13 +1,13 @@
 [everything_servers]
-66.175.108.44 hostname=irc.myname.com has_workers=yes
+irc.myname.com ansible_ssh_host=66.175.108.44
 
 [db_servers]
-182.33.59.13 hostname=db.myapp.com private_ip=10.0.0.1
+db.myapp.com ansible_ssh_host=182.33.59.13 private_ip=10.0.0.1
 
 [app_servers]
-182.33.49.121 hostname=app1.myapp.com private_ip=10.0.1.1
-182.33.14.241 hostname=app2.myapp.com private_ip=10.0.1.2
-182.33.93.74  hostname=app3.myapp.com private_ip=10.0.1.3
+app1.myapp.com ansible_ssh_host=182.33.49.121 private_ip=10.0.1.1
+app2.myapp.com ansible_ssh_host=182.33.14.241 private_ip=10.0.1.2
+app3.myapp.com ansible_ssh_host=182.33.93.74  private_ip=10.0.1.3
 
 [worker_servers]
 worker1.myapp.com ansible_ssh_host=182.33.49.21 private_ip=10.0.2.1

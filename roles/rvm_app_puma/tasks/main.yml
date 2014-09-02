@@ -1,11 +1,13 @@
 ---
 - name: Create state directory
+  tags: setup
   file:
     path: '{{puma_state_directory}}'
     state: directory
     owner: '{{app_user}}'
 
 - name: Add Upstart init config
+  tags: setup
   template:
     src: upstart.conf.j2
     dest: /etc/init/{{puma_init_ident}}.conf
@@ -13,6 +15,7 @@
     group: root
 
 - name: Add sudo entries for initctl
+  tags: setup
   lineinfile:
     dest: /etc/sudoers
     line: '{{app_user}} ALL=NOPASSWD: /sbin/initctl {{item}} {{puma_init_ident}}'
@@ -24,6 +27,7 @@
     - restart
 
 - name: Add logrotate for application log
+  tags: setup
   template:
     src: logrotate.j2
     dest: /etc/logrotate.d/{{puma_init_ident}}
@@ -32,6 +36,7 @@
     mode: '0664'
 
 - name: Add Nginx site
+  tags: config
   template:
     src: nginx-site.j2
     dest: /etc/nginx/sites-available/{{app_domain}}
@@ -39,14 +44,15 @@
     group: '{{nginx_group}}'
 
 - name: Enable Nginx site
+  tags: config
   file:
     src: /etc/nginx/sites-available/{{app_domain}}
     path: /etc/nginx/sites-enabled/{{app_domain}}
     state: link
     owner: '{{nginx_user}}'
     group: '{{nginx_group}}'
-
   notify: Restart Nginx
 
 - name: Enable Puma service
+  tags: setup
   service: name={{puma_init_ident}} enabled=yes state=stopped

@@ -1,0 +1,50 @@
+---
+- name: Ask for admin password
+  tags: ['ask_for_admin_password', 'setup']
+  vars_prompt:
+    - name: admin_password
+      prompt: 'Enter password for {{admin_user}}'
+      private: yes
+
+- name: Provision and configure Full-Stack servers
+  hosts: everything_servers
+  vars:
+    app_database_host: 127.0.0.1
+    redis_bind: 127.0.0.1
+    firewall_allow_public_ports: [80, 443]
+  roles:
+    - { role: 'vps', tags: '' }
+    - { role: 'redis', tags: 'redis' }
+    - { role: 'database', tags: 'database' }
+    - { role: 'rvm_app_puma', tags: 'puma' }
+    - { role: 'rvm_app_sidekiq', tags: 'sidekiq' }
+    - { role: 'nodejs', tags: 'nodejs' }
+
+- name: Provision and configure database servers
+  hosts: db_servers
+  vars:
+    redis_bind: '{{private_ip}}'
+    firewall_allow_private_ports:
+      - 5432 # Postgres
+      - 6379 # Redis
+  roles:
+    - { role: 'vps', tags: 'vps' }
+    - { role: 'redis', tags: 'redis' }
+    - { role: 'database', tags: 'database' }
+
+- name: Provision application servers
+  hosts: app_servers
+  vars:
+    firewall_allow_public_ports: [80, 443]
+  roles:
+    - { role: 'vps', tags: 'vps' }
+    - { role: 'postgresql_client', tags: 'pg_client' }
+    - { role: 'nodejs', tags: 'nodejs' }
+    - { role: 'rvm_app_puma', tags: 'puma' }
+
+- name: Provision worker servers
+  hosts: worker_servers
+  roles:
+    - { role: 'vps', tags: 'vps' }
+    - { role: 'nodejs', tags: 'nodejs' }
+    - { role: 'rvm_app_puma', tags: 'puma' }

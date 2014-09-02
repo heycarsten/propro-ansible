@@ -17,3 +17,10 @@ app_shared_config_directory: '{{app_shared_directory}}/config'
 app_shared_bin_directory: '{{app_shared_directory}}/bin'
 app_shared_bundle_directory: '{{app_shared_directory}}/bundle'
 app_shared_sockets_directory: '{{app_shared_directory}}/sockets'
+app_database_name: '{{database_name}}'
+app_database_adapter: postgresql
+app_database_encoding: unicode
+app_database_user: '{{database_user}}'
+app_database_host: '{{hostvars[groups.db_servers.0].private_ip}}'
+app_database_pool: 35
+app_secrets: {}

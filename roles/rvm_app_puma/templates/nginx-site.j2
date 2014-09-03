@@ -1,7 +1,7 @@
 #{{ansible_managed}}
 
 upstream {{app_ident}} {
-  server {{puma_socket_path}} fail_timeout=0;
+  server unix:{{puma_socket_path}} fail_timeout=0;
 }
 
 {% if puma_nginx_redirect_www %}

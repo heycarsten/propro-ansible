@@ -11,6 +11,5 @@ redis_data_directory: /var/lib/redis
 redis_data_file: dump.rdb
 redis_log_directory: /var/log/redis
 redis_log_file: redis.log
-
 redis_logrotate_event: weekly
 redis_logrotate_maxrotations: 52

@@ -30,7 +30,7 @@
 
 - name: Create application deploy tree (Capistrano)
   tags: setup
-  file: 'path={{item}} state=directory owner={{app_user}}'
+  file: 'path={{item}} state=directory owner={{app_user}} group={{app_group}}'
   with_items:
     - '{{app_directory}}'
     - '{{app_releases_directory}}'

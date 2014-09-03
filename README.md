@@ -32,10 +32,12 @@ unicorns, there are some mighty robust/battle-hardened roles on there!
    root login and password login.
 
    ```
-   ansible-playbook -k -i -u root inventory/hosts prepare-vps.yml
+   ansible-playbook -k -u root -i inventory/hosts prepare-vps.yml
    ```
-4. Now you can run the `site.yml` playbook and provision your servers.
+4. Now you can run the `site.yml` playbook and provision your servers as the
+   admin user that was created above since password-based auth and root-access
+   are now disabled.
 
-  ```
-  ansible-playbook -K -s -u admin -i inventory/hosts site.yml
-  ```
+   ```
+   ansible-playbook -K -s -u admin -i inventory/hosts site.yml
+   ```

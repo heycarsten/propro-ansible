@@ -30,4 +30,12 @@ unicorns, there are some mighty robust/battle-hardened roles on there!
 3. Run the `prepare-vps.yml` playbook, this adds the public keys for the GitHub
    users you specified in `admin_authorized_githubbers` variable and disables
    root login and password login.
+
+   ```
+   ansible-playbook -k -i -u root inventory/hosts prepare-vps.yml
+   ```
 4. Now you can run the `site.yml` playbook and provision your servers.
+
+  ```
+  ansible-playbook -K -s -u admin -i inventory/hosts site.yml
+  ```

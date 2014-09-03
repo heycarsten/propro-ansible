@@ -1,6 +1,5 @@
 ---
 dependencies:
   - { role: 'essential_system', tags: 'essential_system' }
-  - { role: 'remote_auth', tags: 'remote_auth' }
   - { role: 'networking', tags: 'networking' }
   - { role: 'firewall', tags: 'firewall' }

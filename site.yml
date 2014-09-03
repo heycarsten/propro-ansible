@@ -1,11 +1,4 @@
 ---
-- name: Ask for admin password
-  tags: ['ask_for_admin_password', 'setup']
-  vars_prompt:
-    - name: admin_password
-      prompt: 'Enter password for {{admin_user}}'
-      private: yes
-
 - name: Provision and configure Full-Stack servers
   hosts: everything_servers
   vars:

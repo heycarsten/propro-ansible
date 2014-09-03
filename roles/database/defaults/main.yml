@@ -1,5 +1,7 @@
 ---
 database_encoding: UTF-8
+database_user: '{{app_user}}'
+database_password: null
 database_extensions:
   - btree_gin
   - btree_gist

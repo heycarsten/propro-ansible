@@ -1,0 +1,10 @@
+---
+- name: Prepare VPS servers for public-key login
+  hosts: all
+  vars_prompt:
+    - name: admin_password
+      prompt: 'Enter password for admin user'
+      private: yes
+      when: not admin_password
+  roles:
+    - remote_auth

@@ -5,6 +5,8 @@
     name: '{{database_user}}'
     password: '{{database_password}}'
     state: present
+  sudo: yes
+  sudo_user: postgres
 
 - name: 'Create database {{database_name}}'
   tags: ['db_setup', 'setup']
@@ -30,6 +32,8 @@
   replace:
     dest: '{{postgres_hba_conf}}'
     regexp: '^host {{database_name}} {{database_user}} [0-9\.]+/32 trust$'
+  sudo: yes
+  sudo_user: postgres
 
 - name: Add auth entries for trusted IPs
   tags: ['db_config', 'config']
@@ -37,3 +41,5 @@
     dest: '{{postgres_hba_conf}}'
     line: 'host {{database_name}} {{database_user}} {{item}}/32 trust'
   with_items: firewall_allow_private_ips
+  sudo: yes
+  sudo_user: postgres

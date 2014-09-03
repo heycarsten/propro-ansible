@@ -1,5 +1,5 @@
 ---
-- name: 'Add {{app_user}} user'
+- name: 'Add app user'
   tags: setup
   user: name={{app_user}} shell=/bin/bash
 

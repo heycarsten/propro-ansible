@@ -21,6 +21,13 @@ unicorns, there are some mighty robust/battle-hardened roles on there!
 3. Run `vagrant up` the system should build itself
 4. Have a beer or wine or spirit or soda or juice or water to celebrate
 
-## Real World VPS
+## Real World
 
-_Coming soon!_
+1. Add your own `inventory` directory, check out the `inventory_example`
+   for how this might look.
+2. Add and build a VPS in your provider of choice, remember to choose Ubuntu
+   12.04, or 14.04 as Propro was only built against those two distributions.
+3. Run the `prepare-vps.yml` playbook, this adds the public keys for the GitHub
+   users you specified in `admin_authorized_githubbers` variable and disables
+   root login and password login.
+4. Now you can run the `site.yml` playbook and provision your servers.

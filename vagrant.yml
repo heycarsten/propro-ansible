@@ -2,7 +2,6 @@
 - name: Provision a Vagrant VM with RVM, Redis, Postgres, Node.js, and Nginx
   hosts: all
   remote_user: vagrant
-  gather_facts: yes
   sudo: yes
 
   vars:

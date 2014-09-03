@@ -1,9 +1,9 @@
 ---
 app_user: deploy
 app_group: deploy
-# app_authorized_githubbers: []
+app_authorized_githubbers: []
 app_data_directory: /sites
-# app_domain:
+app_domain:
 app_env: production
 app_ident: '{{app_domain|replace(''.'', ''-'')}}'
 app_directory: '{{app_data_directory}}/{{app_domain}}'

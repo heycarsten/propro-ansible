@@ -12,8 +12,7 @@ iface eth0 inet static
 
 {% if private_ip and private_netmask %}
 # Private interface
-iface eth0:1 inet static
+iface eth0:0 inet static
  address {{private_ip}}
  netmask {{private_netmask}}
-EOT
 {% endif %}

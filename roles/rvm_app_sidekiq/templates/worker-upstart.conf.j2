@@ -2,8 +2,8 @@
 
 description "Sidekiq Worker ({{app_domain}})"
 
-# Start is handled by /etc/init/{{sidekiq_init_worker_custer_ident}}.conf
-stop on (stopping {{sidekiq_init_worker_custer_ident}} or runlevel [06])
+# Start is handled by /etc/init/{{sidekiq_init_worker_cluster_ident}}.conf
+stop on (stopping {{sidekiq_init_worker_cluster_ident}} or runlevel [06])
 
 normal exit 0 TERM # Term is sent by sidekiqctl when stopping
 

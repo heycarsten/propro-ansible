@@ -1,5 +1,5 @@
 ---
-- name: 'Create database user {{database_user}}'
+- name: 'Create database user'
   tags: ['db_setup', 'setup']
   postgresql_user:
     name: '{{database_user}}'
@@ -8,7 +8,7 @@
   sudo: yes
   sudo_user: postgres
 
-- name: 'Create database {{database_name}}'
+- name: 'Create database'
   tags: ['db_setup', 'setup']
   postgresql_db:
     name: '{{database_name}}'
@@ -18,7 +18,7 @@
   sudo: yes
   sudo_user: postgres
 
-- name: 'Install extensions for database: {{database_name}}'
+- name: 'Install extensions for database'
   tags: ['db_config', 'config']
   command: 'psql {{database_name}} -c ''create extension if not exists "{{item}}";'''
   sudo: yes

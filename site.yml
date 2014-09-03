@@ -6,12 +6,12 @@
     redis_bind: 127.0.0.1
     firewall_allow_public_ports: [80, 443]
   roles:
-    - { role: 'vps', tags: '' }
+    - { role: 'vps', tags: 'vps' }
     - { role: 'redis', tags: 'redis' }
     - { role: 'database', tags: 'database' }
+    - { role: 'nodejs', tags: 'nodejs' }
     - { role: 'rvm_app_puma', tags: 'puma' }
     - { role: 'rvm_app_sidekiq', tags: 'sidekiq' }
-    - { role: 'nodejs', tags: 'nodejs' }
 
 - name: Provision and configure database servers
   hosts: db_servers

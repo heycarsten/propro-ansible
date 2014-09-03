@@ -3,9 +3,15 @@
   tags: setup
   user: name={{app_user}} shell=/bin/bash
 
-- name: 'Download authorized keys from GitHub for {{app_user}}'
+- name: Verify authorized GitHub users are provided
+  tags: setup
+  fail: msg="app_authorized_githubbers must contain at least one GitHub username"
+  when: not app_authorized_githubbers
+
+- name: 'Download authorized keys from GitHub for app user'
   tags: ['config_ssh_keys', 'config']
   connection: local
+  sudo: no
   get_url:
     url: https://github.com/{{item}}.keys
     dest: /tmp/github.{{item}}.keys

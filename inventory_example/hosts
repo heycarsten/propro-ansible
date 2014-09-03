@@ -16,7 +16,7 @@ worker3.myapp.com ansible_ssh_host=182.33.49.41 private_ip=10.0.2.3
 worker4.myapp.com ansible_ssh_host=182.33.49.51 private_ip=10.0.2.4
 
 [linode:children]
-*
+all
 
 [db_clients:children]
 app_servers

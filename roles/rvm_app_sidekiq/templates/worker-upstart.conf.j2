@@ -12,14 +12,19 @@ setuid {{app_user}}
 setgid {{app_group}}
 {% endif %}
 
-instance $index
+instance {{sidekiq_init_worker_ident}}-$index
 
 env PATH=/home/{{app_user}}/.rvm/wrappers/default
 
 chdir {{app_current_directory}}
 
-exec &> /dev/kmsg # log Sidekiq output to syslog
-exec bundle exec sidekiq -i ${index} -e {{app_env}}
+exec bundle exec sidekiq \
+  -i ${index} \
+  -e {{app_env}} \
+  -P tmp/pids/{{sidekiq_init_worker_ident}}-$index.pid
+
+pre-stop exec bundle exec sidekiqctl stop \
+  tmp/pids/{{sidekiq_init_worker_ident}}-$index.pid
 
 respawn
 respawn limit 3 30

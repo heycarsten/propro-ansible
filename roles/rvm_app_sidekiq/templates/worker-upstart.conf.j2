@@ -8,6 +8,9 @@ stop on (stopping {{sidekiq_init_worker_cluster_ident}} or runlevel [06])
 normal exit 0 TERM # Term is sent by sidekiqctl when stopping
 
 setuid {{app_user}}
+{% if app_group %}
+setgid {{app_group}}
+{% endif %}
 
 instance $index
 

@@ -43,3 +43,12 @@
   with_items: firewall_allow_private_ips
   sudo: yes
   sudo_user: postgres
+
+- name: Add auth entries for db_clients group
+  tags: ['db_config', 'config']
+  linein_file:
+    dest: '{{postgresql_hba_path}}'
+    line: 'host {{database_name}} {{database_user}} {{hostvars[item].private_ip}}/32 trust'
+  with_items: firewall_allow_db_clients
+  sudo: yes
+  sudo_user: postgres

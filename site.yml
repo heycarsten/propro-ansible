@@ -1,6 +1,6 @@
 ---
-- name: Provision and configure Full-Stack servers
-  hosts: everything_servers
+- name: Provision and configure full-stack servers
+  hosts: fullstack_servers
   vars:
     app_database_host: 127.0.0.1
     redis_bind: 127.0.0.1

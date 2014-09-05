@@ -42,6 +42,13 @@ unicorns, there are some mighty robust/battle-hardened roles on there!
    ansible-playbook -K -s -u admin -i inventory/hosts site.yml
    ```
 
+## Give it a whirl
+
+The beauty of Ansible is just how easy it is to re-use roles and tweak
+playbooks, don't think you're confined to what I've laid-out here. Feel free
+to create your own playbooks for your specific needs. Propro is really just
+supposed to be a starting point.
+
 ## Groups
 
 Here is some info about the groups that are included in the example inventory
@@ -83,9 +90,3 @@ use to configure the firewall rules on the database machines.
 
 These groups show you how to apply variables to ranges of machines, in this case
 we use them to configure public/private netmasks specific to the two providers.
-
-## Stuff
-
-Propro is intented to be used to provision small to medium scale deployments, as
-your app grows and grows (lucky you) your infrastructure will become more and
-more specific to your needs.

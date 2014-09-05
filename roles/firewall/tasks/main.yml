@@ -25,13 +25,21 @@
   with_items: firewall_allow_public_ports
   when: firewall_allow_public_ports
 
-- name: Allow private traffic
+- name: Allow private traffic from db_clients group
   tags: config
-  ufw: rule=allow port={{item.0}} from={{item.1}} state=enabled
+  ufw: rule=allow port={{item.0}} from={{hostvars[item.1].private_ip}} state=enabled
+  with_nested:
+    - firewall_allow_private_ports
+    - firewall_allow_db_clients
+  when: firewall_allow_private_ports and firewall_allow_db_clients
+
+- name: Allow private traffic from specified private ips
+  tags: config
+  ufw: rule=allow port={{item.0}} from={{item.1}}
   with_nested:
     - firewall_allow_private_ports
     - firewall_allow_private_ips
-  when: firewall_allow_private_ports
+  when: firewall_allow_private_ports and firewall_allow_private_ips
 
 - name: Enable
   tags: config

@@ -12,7 +12,7 @@ Feel free to use it as an Ansible grab-bag or starting-point if your needs
 differ. Also check out [Ansible Galaxy](https://galaxy.ansible.com/) for magic
 unicorns, there are some mighty robust/battle-hardened roles on there!
 
-## Vagrant Dev VM
+## Vagrant VM
 
 1. Copy the Vagrantfile.example and change the private IP and vm name to your
    liking
@@ -41,3 +41,51 @@ unicorns, there are some mighty robust/battle-hardened roles on there!
    ```
    ansible-playbook -K -s -u admin -i inventory/hosts site.yml
    ```
+
+## Groups
+
+Here is some info about the groups that are included in the example inventory
+and what they were created to achive.
+
+### `fullstack_servers`
+
+Full stack servers host everything, you can think of this as your "classic" web
+server setup where everything is on one machine.
+
+### `app_servers`
+
+App servers host your Ruby application and Nginx, typically you will have a
+load balancer in front of your app servers. In my case I use Linode's
+Nodebalancer product, but you could just as easily add a play to provision an
+instance with HAProxy and use that as your load balancer. If you're on a VPS and
+they offer a load balancing product it's usually a good idea to utilize it since
+they are often optimized for that use-case.
+
+### `worker_servers`
+
+Exactly the same as an app server except replace Puma with Sidekiq. There is
+nothing stopping you from running Sidekiq on your app servers, but if you have
+the cash to run your workers on separate machines it's really nice to do so.
+
+### `db_servers`
+
+Hosts PostgreSQL and/or Redis, data is persisted on these servers. They don't
+know anything about your app other than that they will accept inbound
+connections from your app/worker servers.
+
+### `db_clients`
+
+This is an aggregate group that consists of all the servers that will need to
+talk to the database servers. The private IPs are pulled from these machines and
+use to configure the firewall rules on the database machines.
+
+### `linode` and `digital_ocean`
+
+These groups show you how to apply variables to ranges of machines, in this case
+we use them to configure public/private netmasks specific to the two providers.
+
+## Stuff
+
+Propro is intented to be used to provision small to medium scale deployments, as
+your app grows and grows (lucky you) your infrastructure will become more and
+more specific to your needs.

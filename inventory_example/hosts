@@ -1,4 +1,4 @@
-[everything_servers]
+[fullstack_servers]
 irc.myname.com ansible_ssh_host=66.175.108.44
 
 [db_servers]

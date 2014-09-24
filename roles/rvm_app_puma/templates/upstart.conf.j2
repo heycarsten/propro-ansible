@@ -21,7 +21,7 @@ exec bundle exec puma \
   --config {{puma_config_relative_path}} \
   --environment {{app_env}} \
   --bind unix://{{puma_socket_path}} \
-  --state {{puma_state_directory}} \
+  --state {{puma_state_path}} \
   --pidfile {{puma_pid_path}}
 
 respawn

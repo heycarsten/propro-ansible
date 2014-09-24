@@ -52,6 +52,11 @@
     group: '{{app_group}}'
     mode: '0640'
 
+- name: Create secret_key_base
+  tags: config
+  shell: openssl rand -hex 64
+  register: secret_key_base
+
 - name: Update secrets.yml
   tags: ['config_secrets_yml', 'config']
   template:

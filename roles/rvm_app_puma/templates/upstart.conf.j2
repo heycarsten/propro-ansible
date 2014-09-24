@@ -13,7 +13,7 @@ reload signal USR2 # Perform hot-restart
 
 setuid {{app_user}}
 
-env PATH=/home/{{app_user}}/.rvm/wrappers/default
+env PATH=/bin:/usr/bin:/home/{{app_user}}/.rvm/wrappers/default
 
 chdir {{app_current_directory}}
 

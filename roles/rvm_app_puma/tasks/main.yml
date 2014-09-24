@@ -6,6 +6,13 @@
     state: directory
     owner: '{{app_user}}'
 
+- name: Create pid directory
+  tags: setup
+  file:
+    path: '{{puma_pid_directory}}'
+    state: directory
+    owner: '{{app_user}}'
+
 - name: Add Upstart init config
   tags: setup
   template:

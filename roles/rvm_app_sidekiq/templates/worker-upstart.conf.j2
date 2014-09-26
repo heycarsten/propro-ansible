@@ -14,7 +14,7 @@ setgid {{app_group}}
 
 instance {{sidekiq_init_worker_ident}}-$index
 
-env PATH=/home/{{app_user}}/.rvm/wrappers/default
+env PATH=/bin:/usr/bin:/home/{{app_user}}/.rvm/wrappers/default
 
 chdir {{app_current_directory}}
 

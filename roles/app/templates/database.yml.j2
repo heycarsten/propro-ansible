@@ -4,3 +4,6 @@
   pool: {{app_database_pool}}
   database: {{app_database_name}}
   user: {{app_database_user}}
+  {% if app_database_host != '127.0.0.1' %}
+  host: {{app_database_host}}
+  {% endif %}
